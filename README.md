@@ -14,5 +14,6 @@ OR
 OR 
 
 - command to download service dependencies: `npm i`
+- command to create the .env file: `cp .env.example .env`
 - command to start the server: `npm run start:dev`
 - command responsible for running the tests: `npm run test`
