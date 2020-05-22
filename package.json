@@ -1,0 +1,68 @@
+{
+  "name": "nuvem-mestra-test",
+  "version": "1.0.0",
+  "description": "Node.JS + TypeScript + Express.JS",
+  "main": "./dist/framework/server.js",
+  "author": "Douglas Dennys <douglasdennys@yahoo.com>",
+  "scripts": {
+    "start:dev": "nodemon --exec sucrase-node ./src/framework/cmd/server.ts --ignore __tests__",
+    "start": "node ./dist/framework/cmd/server.js",
+    "lint:fix": "eslint --fix",
+    "test": "jest",
+    "build": "rimraf ./dist && tsc"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "humps": "^2.0.1",
+    "moment": "^2.26.0",
+    "node-fetch": "^2.6.0"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.6",
+    "@types/dotenv": "^8.2.0",
+    "@types/express": "^4.17.6",
+    "@types/humps": "^2.0.0",
+    "@types/jest": "^25.2.3",
+    "@types/moment": "^2.13.0",
+    "@types/node": "^14.0.4",
+    "@types/node-fetch": "^2.5.7",
+    "@types/supertest": "^2.0.9",
+    "@typescript-eslint/eslint-plugin": "^2.34.0",
+    "@typescript-eslint/parser": "^2.34.0",
+    "eslint": "^7.0.0",
+    "eslint-config-standard": "^14.1.1",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-jest": "^23.13.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
+    "husky": "^4.2.5",
+    "jest": "^26.0.1",
+    "lint-staged": "^10.2.4",
+    "nodemon": "^2.0.4",
+    "rimraf": "^3.0.2",
+    "sucrase": "^3.15.0",
+    "supertest": "^4.0.2",
+    "ts-jest": "^26.0.0",
+    "ts-node": "^8.10.1",
+    "typescript": "^3.9.3"
+  },
+  "keywords": [
+    "Node.JS",
+    "TypeScript",
+    "Express.JS"
+  ],
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.ts": [
+      "eslint --fix"
+    ]
+  }
+}
