@@ -17,3 +17,7 @@ OR
 - command to create the .env file: `cp .env.example .env`
 - command to start the server: `npm run start:dev`
 - command responsible for running the tests: `npm run test`
+
+##### **Example request**
+
+- `url -i -H "Accept: application/json" -H "Content-Type: application/json" -X GET http://localhost:3000?start=2020-04-18&end=2020-04-20&state=RN` 

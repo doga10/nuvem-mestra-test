@@ -25,36 +25,39 @@ const parserNuvem = (index: number, data: CovidInfo): Nuvem => {
 
 export const casesByDate = async (req: Request, res: Response) => {
   const params: any = req.query
-  const startDate = moment(params.start, 'YYYY-MM-DD')
-  const endDate = moment(params.end, 'YYYY-MM-DD')
-  const diff = endDate.diff(startDate, 'days')
+  if (params.start && params.end && params.state) {
+    const startDate = moment(params.start, 'YYYY-MM-DD')
+    const endDate = moment(params.end, 'YYYY-MM-DD')
+    const diff = endDate.diff(startDate, 'days')
 
-  let cases: CovidInfo[]
-  for (let date = 0; date <= diff; date++) {
-    if (date === 0) {
-      const response = await getApiCovid(params.state, startDate.format('YYYY-MM-DD'))
-      if (response.count > 0) {
-        cases = response.results
-      }
-    } else {
-      const parserDate = moment(startDate.add(1, 'days')).format('YYYY-MM-DD')
-      const response = await getApiCovid(params.state, parserDate)
-      if (response.count > 0) {
-        cases = response.results
+    let cases: CovidInfo[]
+    for (let date = 0; date <= diff; date++) {
+      if (date === 0) {
+        const response = await getApiCovid(params.state, startDate.format('YYYY-MM-DD'))
+        if (response.count > 0) {
+          cases = response.results
+        }
+      } else {
+        const parserDate = moment(startDate.add(1, 'days')).format('YYYY-MM-DD')
+        const response = await getApiCovid(params.state, parserDate)
+        if (response.count > 0) {
+          cases = response.results
+        }
       }
     }
-  }
 
-  // @ts-ignore
-  sortCases(cases)
-  // @ts-ignore
-  const sort = cases.slice(0, 10)
-  const arr: Nuvem[] = []
-  for (const index in sort) {
-    const parser = parserNuvem(+index, sort[index])
-    const response = await postAPINuvemMestra(parser)
-    arr.push(response)
-  }
+    // @ts-ignore
+    sortCases(cases)
+    // @ts-ignore
+    const sort = cases.slice(0, 10)
+    const arr: Nuvem[] = []
+    for (const index in sort) {
+      const parser = parserNuvem(+index, sort[index])
+      const response = await postAPINuvemMestra(parser)
+      arr.push(response)
+    }
 
-  return res.status(200).json(arr)
+    return res.status(200).json({ data: arr, status: true, code: 200 })
+  }
+  return res.status(401).json({ data: 'required parameters  ', status: false, code: 401 })
 }
